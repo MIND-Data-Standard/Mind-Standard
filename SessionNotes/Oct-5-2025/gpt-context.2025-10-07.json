@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/context/mind.session.context.json",
+  "meta": {
+    "standard": "MIND Schema",
+    "version": "2025-10",
+    "sessionDate": "2025-10-07",
+    "summaryOfChanges": "Phases 1–3 largely completed in-place: removed defs wrappers for primitives/types; promoted sample schemas; canonicalized metas and maps; updated recording schema; added schema compile tooling. Physical folder renames are deferred to CLI."
+  },
+  "goal": "Handoff: validate canonical schemas via Ajv, then finish folder renames and cleanup deprecated stubs. Enable CI after green compile.",
+  "acceptanceCriteria": [
+    "Ajv compile succeeds across canonical primitives, types, samples, metas, maps, enums using offline load.",
+    "No references to schema/def or ../defs remain in canonical files.",
+    "Top-level recording.schema.json references only canonical metas/types/samples.",
+    "Folders pluralized (meta -> metas, sample -> samples) and $id base remains singular 'schema'.",
+    "Deprecated stubs under schema/samples/*.sample.json and schema/sample/{action,event,device,software}.json removed after downstreams are updated."
+  ],
+  "keyFiles": [
+    "package.json",
+    "tools/compile-schemas.js",
+    "schema/schema-compile.config.json",
+    "schema/recording.schema.json",
+    "schema/participant.schema.json",
+    "schema/primitives/*.json",
+    "schema/types/*.json",
+    "schema/sample/*.json",
+    "schema/meta/*.json",
+    "schema/maps/*.json",
+    "schema/enums/*.json"
+  ],
+  "decisions": [
+    "Keep base path in $id as 'schema' (singular) and use pluralized subfolders: primitives, types, samples, metas, maps, enums.",
+    "No backwards-compat wrappers. Canonical files contain full schemas (not $ref passthrough to defs).",
+    "Physical folder renames deferred: schema/meta and schema/sample remain on disk for now; $id already uses metas/samples.",
+    "Alias files under schema/types/alias are deprecated; canonical mappings live under schema/maps/*.mapping.json."
+  ],
+  "openTodos": [
+    "Install Node.js LTS so npm is available, then run compile (see commands).",
+    "Rename folders via CLI: schema/meta -> schema/metas; schema/sample -> schema/samples.",
+    "Run compile; fix any unresolved ref issues (if any) reported by Ajv.",
+    "When stable, remove deprecated stubs: schema/samples/*.sample.json and schema/sample/{action,event,device,software}.json.",
+    "Optionally remove schema/defs and schema/types/alias after consumers migrate.",
+    "Add a GitHub Action to run the compile script on PR."
+  ],
+  "commands": {
+    "windows_install_node_lts_cmd": "winget install OpenJS.NodeJS.LTS",
+    "verify_node_cmd": "node -v && npm -v",
+    "install_deps_cmd": "npm install",
+    "compile_cmd": "npm run schema:compile",
+    "grep_no_defs_cmd": "findstr /s /i /m /c:\"/def/\" schema\\*.json",
+    "grep_no_schemas_base_cmd": "findstr /s /i /m /c:\"schemas/\" schema\\*.json",
+    "rename_meta_cmd": "REN schema\\meta metas",
+    "rename_sample_cmd": "REN schema\\sample samples"
+  },
+  "notes": {
+    "why_npm_not_found": "PowerShell reported 'npm is not recognized' because Node.js/npm is not installed or not on PATH. Install Node.js LTS (winget command above), then open a new terminal so PATH updates take effect.",
+    "compile_how_it_works": "The compile script loads all JSON files under schema/{primitives,types,sample,meta,maps,enums} plus top-level schemas, registers them in Ajv by $id, then compiles each. Because $refs use canonical $ids, physical folder names can differ until you rename them; Ajv resolves by $id in-memory."
+  },
+  "checkpoints": [
+    { "timestamp": "2025-10-07T10:30Z", "note": "Added package.json, tools/compile-schemas.js, and schema/schema-compile.config.json for offline Ajv compile. Canonicalized primitives/types; promoted sample schemas; updated metas and maps; recording wired to canonical." }
+  ]
+}
+

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/enums/hand.finger.enum.json",
+  "title": "fingerType",
+  "description": "Enumeration of finger names used for hand-tracking joints and bones.",
+  "type": "string",
+  "enum": ["thumb", "index", "middle", "ring", "little", "none"],
+  "examples": ["index", "thumb"]
+}

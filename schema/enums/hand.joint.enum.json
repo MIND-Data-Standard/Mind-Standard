@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/enums/hand.joint.enum.json",
+  "$comment": "MIND harmonised 2025-10 — canonical enumeration of 26 hand joints based on OpenXR XR_EXT_hand_tracking",
+  "title": "handJointEnum",
+  "description": "Canonical list of all joint names used for MIND hand tracking, aligned with OpenXR XRHandJointEXT and Unity XRHands joint conventions.",
+  "type": "string",
+  "enum": [
+    "wrist",
+    "palm",
+    "thumbMetacarpal",
+    "thumbProximal",
+    "thumbDistal",
+    "thumbTip",
+    "indexMetacarpal",
+    "indexProximal",
+    "indexIntermediate",
+    "indexDistal",
+    "indexTip",
+    "middleMetacarpal",
+    "middleProximal",
+    "middleIntermediate",
+    "middleDistal",
+    "middleTip",
+    "ringMetacarpal",
+    "ringProximal",
+    "ringIntermediate",
+    "ringDistal",
+    "ringTip",
+    "littleMetacarpal",
+    "littleProximal",
+    "littleIntermediate",
+    "littleDistal",
+    "littleTip"
+  ],
+  "examples": [
+    "wrist",
+    "indexProximal",
+    "thumbTip"
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/metas/skeleton.meta.json",
+  "$comment": "MIND harmonised 2025-10 — static metadata describing the structure and topology of a skeleton.",
+  "title": "skeletonMeta",
+  "description": "Static metadata describing the anatomical or virtual skeleton of a tracked body or model, including all bones, joints, and their hierarchical relationships.",
+
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Canonical name or identifier of the skeleton (e.g., 'HumanBody', 'LeftHand', 'XRHand')."
+    },
+    "region": {
+      "$ref": "https://mind-schema.org/schema/enums/body.region.enum.json",
+      "description": "Overall anatomical region represented by this skeleton (e.g., 'hand', 'body')."
+    },
+    "side": {
+      "$ref": "https://mind-schema.org/schema/enums/body.side.enum.json",
+      "description": "Optional anatomical side represented by this skeleton: 'left', 'right', or 'centre'."
+    },
+    "rootJoint": {
+      "$ref": "https://mind-schema.org/schema/metas/joint.meta.json",
+      "description": "The root joint of the skeleton hierarchy."
+    },
+    "joints": {
+      "type": "array",
+      "items": { "$ref": "https://mind-schema.org/schema/metas/joint.meta.json" },
+      "description": "List of all joint metadata objects composing the skeleton."
+    },
+    "bones": {
+      "type": "array",
+      "items": { "$ref": "https://mind-schema.org/schema/metas/bone.meta.json" },
+      "description": "List of all bone metadata objects connecting the joints."
+    },
+    "chains": {
+      "type": "array",
+      "items": { "$ref": "https://mind-schema.org/schema/types/chain.json" },
+      "description": "Optional ordered chains of joints defining specific kinematic paths (e.g., fingers, spine)."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Optional additional metadata, such as tracking source, calibration parameters, device model, or versioning.",
+      "properties": {
+        "source": {
+          "type": "string",
+          "description": "Name or identifier of the device or tracking system that defined this skeleton (e.g., 'OpenXR', 'OptiTrack')."
+        },
+        "version": {
+          "type": "string",
+          "description": "Version string identifying the rig or calibration used."
+        }
+      },
+      "additionalProperties": true
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Custom extension fields for future compatibility.",
+      "additionalProperties": true
+    }
+  },
+
+  "required": ["name", "region", "rootJoint", "joints", "bones"],
+  "additionalProperties": false
+}

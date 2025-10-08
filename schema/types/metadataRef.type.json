@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/types/metadataRef.json",
+  "$comment": "MIND harmonised 2025-10 — unified definition for referencing static metadata from dynamic samples.",
+  "title": "metadataRef",
+  "description": "Reusable, extensible reference to a metadata object. Supports simple UUID/URI strings or structured objects with type and source context.",
+  "oneOf": [
+    { "type": "string", "format": "uuid", "description": "Reference by unique UUID assigned to the metadata object." },
+    { "type": "string", "format": "uri", "description": "Reference by URI or relative path to the metadata definition." },
+    { "type": "string", "pattern": "^#/metadata(/.+)?$", "description": "Optional JSON Pointer reference within the same document." },
+    { "type": "object", "description": "Structured reference object for type-safe and extensible metadata linkage.",
+      "properties": { "refId": { "type": "string", "format": "uuid" }, "refType": { "type": "string", "enum": ["joint", "bone", "skeleton", "hand", "interactive", "other"] }, "refURI": { "type": "string", "format": "uri" }, "refVersion": { "type": "string", "description": "Optional metadata version identifier." } },
+      "required": ["refId", "refType"], "additionalProperties": false }
+  ],
+  "examples": ["c1e4a1a2-85d3-4f12-b85b-987a01b5e1ac", "meta/hand/rightHand.json", "#/metadata/joints/0", { "refId": "d6df88b7-4469-4cf5-b8e5-f3b6dba1a55b", "refType": "bone", "refURI": "meta/bones/rightIndexProximal.json" }],
+  "x-ai": { "embeddingHint": "identifier|reference", "notes": "Not intended for numeric embedding; use as categorical or join key." }
+}

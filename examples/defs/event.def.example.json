@@ -1,0 +1,7 @@
+{
+  "$schema": "https://mind-schema.org/schemas/def/event.def.json",
+  "name": "EpochStart",
+  "type": "epoch",
+  "parameters": { "epochNumber": 1 }
+}
+

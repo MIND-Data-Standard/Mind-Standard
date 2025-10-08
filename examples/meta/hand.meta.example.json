@@ -1,0 +1,28 @@
+{
+  "$schema": "https://mind-schema.org/schemas/meta/hand.meta.json",
+  "region": "hand",
+  "side": "left",
+  "trackingSystem": "OpenXR",
+  "trackingProfile": "XR_EXT_hand_tracking",
+  "trackingVersion": "1.1.0",
+  "deviceVendor": "Meta",
+  "deviceModel": "Quest Pro",
+  "joints": [
+    { "name": "leftWrist", "region": "hand", "side": "left" },
+    { "name": "leftIndexProximal", "region": "hand", "side": "left" }
+  ],
+  "bones": [
+    {
+      "name": "leftIndexProximal",
+      "region": "hand",
+      "side": "left",
+      "fromJoint": { "name": "leftWrist" },
+      "toJoint": { "name": "leftIndexProximal" },
+      "length": 0.03,
+      "direction": { "x": 0, "y": 1, "z": 0 }
+    }
+  ],
+  "jointCount": 26,
+  "coordinateSystem": "rightHanded",
+  "unit": "metres"
+}

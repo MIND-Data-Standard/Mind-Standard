@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/maps/hand.skeleton.map.json",
+  "$comment": "MIND harmonised 2025-10 — canonical skeletal graph for the human hand, using explicit bone connections consistent with MIND metadata structure.",
+  "title": "handSkeletonMap",
+  "description": "Graph-level representation of the human hand skeleton used in MIND. Defines root, bones, and kinematic chains using canonical MIND bone and joint definitions.",
+
+  "type": "object",
+  "properties": {
+    "root": {
+      "$ref": "https://mind-schema.org/schema/enums/hand.joint.enum.json",
+      "description": "Root joint of the hand skeleton."
+    },
+
+    "bones": {
+      "type": "array",
+      "description": "List of bone connections linking joints in the hand skeleton. Each entry may reference canonical bone metadata.",
+      "items": {
+        "type": "object",
+        "required": ["fromJoint", "toJoint", "finger"],
+        "properties": {
+          "fromJoint": {
+            "$ref": "https://mind-schema.org/schema/enums/hand.joint.enum.json",
+            "description": "Proximal joint in the connection (parent)."
+          },
+          "toJoint": {
+            "$ref": "https://mind-schema.org/schema/enums/hand.joint.enum.json",
+            "description": "Distal joint in the connection (child)."
+          },
+          "finger": {
+            "$ref": "https://mind-schema.org/schema/enums/hand.finger.enum.json",
+            "description": "Finger classification associated with this bone."
+          },
+          "meta": {
+            "$ref": "https://mind-schema.org/schema/meta/bone.meta.json",
+            "description": "Optional reference or inline metadata object describing this bone (length, direction, orientation, etc.)."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+
+    "chains": {
+      "type": "object",
+      "description": "Finger-wise ordered joint lists describing each kinematic chain from palm to fingertip.",
+      "properties": {
+        "thumb": {
+          "type": "array",
+          "items": { "$ref": "https://mind-schema.org/schema/enums/hand.joint.enum.json" }
+        },
+        "index": {
+          "type": "array",
+          "items": { "$ref": "https://mind-schema.org/schema/enums/hand.joint.enum.json" }
+        },
+        "middle": {
+          "type": "array",
+          "items": { "$ref": "https://mind-schema.org/schema/enums/hand.joint.enum.json" }
+        },
+        "ring": {
+          "type": "array",
+          "items": { "$ref": "https://mind-schema.org/schema/enums/hand.joint.enum.json" }
+        },
+        "little": {
+          "type": "array",
+          "items": { "$ref": "https://mind-schema.org/schema/enums/hand.joint.enum.json" }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "adjacency": {
+      "type": "object",
+      "description": "Optional adjacency lists for fast graph traversal; keys are joint names, values are arrays of child joints.",
+      "patternProperties": {
+        ".*": {
+          "type": "array",
+          "items": { "$ref": "https://mind-schema.org/schema/enums/hand.joint.enum.json" }
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+
+  "required": ["root", "bones", "chains"],
+  "additionalProperties": false,
+
+  "default": {
+    "root": "wrist",
+    "bones": [
+      { "fromJoint": "wrist", "toJoint": "palm", "finger": "none" },
+
+      { "fromJoint": "palm", "toJoint": "thumbMetacarpal", "finger": "thumb" },
+      { "fromJoint": "thumbMetacarpal", "toJoint": "thumbProximal", "finger": "thumb" },
+      { "fromJoint": "thumbProximal", "toJoint": "thumbDistal", "finger": "thumb" },
+      { "fromJoint": "thumbDistal", "toJoint": "thumbTip", "finger": "thumb" },
+
+      { "fromJoint": "palm", "toJoint": "indexMetacarpal", "finger": "index" },
+      { "fromJoint": "indexMetacarpal", "toJoint": "indexProximal", "finger": "index" },
+      { "fromJoint": "indexProximal", "toJoint": "indexIntermediate", "finger": "index" },
+      { "fromJoint": "indexIntermediate", "toJoint": "indexDistal", "finger": "index" },
+      { "fromJoint": "indexDistal", "toJoint": "indexTip", "finger": "index" },
+
+      { "fromJoint": "palm", "toJoint": "middleMetacarpal", "finger": "middle" },
+      { "fromJoint": "middleMetacarpal", "toJoint": "middleProximal", "finger": "middle" },
+      { "fromJoint": "middleProximal", "toJoint": "middleIntermediate", "finger": "middle" },
+      { "fromJoint": "middleIntermediate", "toJoint": "middleDistal", "finger": "middle" },
+      { "fromJoint": "middleDistal", "toJoint": "middleTip", "finger": "middle" },
+
+      { "fromJoint": "palm", "toJoint": "ringMetacarpal", "finger": "ring" },
+      { "fromJoint": "ringMetacarpal", "toJoint": "ringProximal", "finger": "ring" },
+      { "fromJoint": "ringProximal", "toJoint": "ringIntermediate", "finger": "ring" },
+      { "fromJoint": "ringIntermediate", "toJoint": "ringDistal", "finger": "ring" },
+      { "fromJoint": "ringDistal", "toJoint": "ringTip", "finger": "ring" },
+
+      { "fromJoint": "palm", "toJoint": "littleMetacarpal", "finger": "little" },
+      { "fromJoint": "littleMetacarpal", "toJoint": "littleProximal", "finger": "little" },
+      { "fromJoint": "littleProximal", "toJoint": "littleIntermediate", "finger": "little" },
+      { "fromJoint": "littleIntermediate", "toJoint": "littleDistal", "finger": "little" },
+      { "fromJoint": "littleDistal", "toJoint": "littleTip", "finger": "little" }
+    ],
+
+    "chains": {
+      "thumb": ["palm", "thumbMetacarpal", "thumbProximal", "thumbDistal", "thumbTip"],
+      "index": ["palm", "indexMetacarpal", "indexProximal", "indexIntermediate", "indexDistal", "indexTip"],
+      "middle": ["palm", "middleMetacarpal", "middleProximal", "middleIntermediate", "middleDistal", "middleTip"],
+      "ring": ["palm", "ringMetacarpal", "ringProximal", "ringIntermediate", "ringDistal", "ringTip"],
+      "little": ["palm", "littleMetacarpal", "littleProximal", "littleIntermediate", "littleDistal", "littleTip"]
+    },
+
+    "adjacency": {
+      "wrist": ["palm"],
+      "palm": ["thumbMetacarpal", "indexMetacarpal", "middleMetacarpal", "ringMetacarpal", "littleMetacarpal"]
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://mind-schema.org/schemas/meta/skeleton.meta.json",
+  "name": "LeftHandSkeleton",
+  "region": "hand",
+  "side": "left",
+  "rootJoint": { "name": "leftWrist", "region": "hand", "side": "left" },
+  "joints": [
+    { "name": "leftWrist", "region": "hand", "side": "left" },
+    { "name": "leftIndexProximal", "region": "hand", "side": "left" }
+  ],
+  "bones": [
+    {
+      "name": "leftIndexProximal",
+      "region": "hand",
+      "side": "left",
+      "fromJoint": { "name": "leftWrist" },
+      "toJoint": { "name": "leftIndexProximal" },
+      "direction": { "x": 0, "y": 1, "z": 0 },
+      "length": 0.03
+    }
+  ],
+  "metadata": {
+    "source": "OpenXR",
+    "version": "1.1.0"
+  }
+}

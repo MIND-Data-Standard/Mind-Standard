@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/types/software.json",
+  "title": "software",
+  "description": "Primitive structure for software variables only.",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string", "description": "Software name or label." },
+    "version": { "type": "string", "description": "Software version." },
+    "developer": { "type": "string", "description": "Software developer or vendor." }
+  },
+  "required": ["name", "version", "developer"],
+  "additionalProperties": false
+}

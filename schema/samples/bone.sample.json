@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/samples/bone.json",
+  "$comment": "MIND harmonised 2025-10 — per-frame bone sample referencing static bone metadata.",
+  "title": "boneSample",
+  "description": "Per-frame time series sample for a tracked bone. Inherits temporal and spatial properties from trackedObject sample.",
+  "allOf": [ { "$ref": "https://mind-schema.org/schema/samples/trackedObject.json" } ],
+  "type": "object",
+  "properties": {
+    "metadataRef": { "$ref": "https://mind-schema.org/schema/types/metadataRef.json", "description": "Reference to the static metadata entry describing this bone (bone.meta.json)." }
+  },
+  "required": ["metadataRef", "poseData"],
+  "additionalProperties": false
+}

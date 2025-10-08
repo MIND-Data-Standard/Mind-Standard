@@ -1,0 +1,10 @@
+{
+  "$schema": "https://mind-schema.org/schemas/meta/joint.meta.json",
+  "name": "rightIndexProximal",
+  "region": "hand",
+  "side": "right",
+  "restPosition": { "x": 0.02, "y": 0.11, "z": 0.03 },
+  "restRotation": { "x": 0, "y": 0, "z": 0, "w": 1 },
+  "finger": "index",
+  "bone": "proximal"
+}

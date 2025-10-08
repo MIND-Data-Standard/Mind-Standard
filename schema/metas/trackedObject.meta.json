@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/metas/trackedObject.meta.json",
+  "$comment": "MIND harmonised 2025-10 — root metadata schema linking tracked objects to their type-specific metadata definitions",
+  "title": "trackedObject",
+  "description": "Static metadata describing a tracked object, including its unique ID, type, label, hierarchy, and a link to type-specific metadata (e.g. bone, interactive).",
+  "type": "object",
+  "required": ["objectId", "type"],
+  "properties": {
+    "objectId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Globally unique identifier for this tracked object."
+    },
+    "label": {
+      "type": "string",
+      "description": "Optional human-readable label for this object."
+    },
+    "type": {
+      "type": "string",
+      "description": "Categorical type of this tracked object (e.g. 'bone', 'interactive')."
+    },
+    "parentObjectId": {
+      "type": "string",
+      "description": "Optional UUID of a parent trackedObject if this object is part of a hierarchy."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Type-specific metadata associated with this object.",
+      "additionalProperties": false
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Custom extension fields for future compatibility.",
+      "additionalProperties": true
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "type": { "const": "bone" } } },
+      "then": {
+        "properties": {
+          "metadata": {
+            "$ref": "https://mind-schema.org/schema/metas/bone.meta.json"
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "type": { "const": "interactive" } } },
+      "then": {
+        "properties": {
+          "metadata": {
+            "$ref": "https://mind-schema.org/schema/metas/interactive.meta.json"
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}

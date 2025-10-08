@@ -1,0 +1,6 @@
+{
+  "name": "EpochStart",
+  "type": "epoch",
+  "parameters": { "epochNumber": 1 },
+  "movedTo": "examples/defs/event.def.example.json"
+}

@@ -1,0 +1,51 @@
+digraph MIND {
+    rankdir=LR;
+    node [shape=record, fontname="Segoe UI", fontsize=10, style=rounded, color=gray40];
+
+    // --- Core Meta Tables ---
+  Researcher [label="{Researcher|+ researcher_id : UUID\l+ name : text\l+ email : text\l}"];
+    Experience [label="{Experience|+ experience_id : UUID\l+ researcher_id : UUID (FK)\l+ name : text\l+ description : text\l}"];
+    SessionType [label="{SessionType|+ session_type_id : UUID\l+ experience_id : UUID (FK)\l+ name : text\l}"];
+    Run [label="{Run|+ run_id : UUID\l+ experience_id : UUID (FK)\l+ session_type_id : UUID (FK)\l+ participant_id : UUID\l+ start_time : timestamp\l+ end_time : timestamp\l+ length : interval\l}"];
+
+    // --- Structural Components ---
+  Epoch [label="{Epoch|+ epoch_id : UUID\l+ experience_id : UUID (FK)\l+ name : text\l+ description : text\l}"];
+    Device [label="{Device|+ device_id : UUID\l+ name : text\l+ type : text\l+ manufacturer : text\l}"];
+    Software [label="{Software|+ software_id : UUID\l+ name : text\l+ version : text\l}"];
+    RunDevice [label="{RunDevice|+ run_id : UUID (FK)\l+ device_id : UUID (FK)\l}"];
+    RunSoftware [label="{RunSoftware|+ run_id : UUID (FK)\l+ software_id : UUID (FK)\l}"];
+
+    // --- Data Flow / Events ---
+  ExperienceExecution [label="{ExperienceExecution|+ frame_number : int\l+ timestamp : timestamp\l+ epoch_id : UUID (FK)\l+ epoch_number : int\l}"];
+    EventPoint [label="{EventPoint|+ event_id : UUID\l+ run_id : UUID (FK)\l+ frame_number : int (FK)\l+ name : text\l+ source : text\l+ source_type : text\l+ event_number : int\l}"];
+    Action [label="{Action|+ action_id : UUID\l+ event_id : UUID (FK)\l+ type : text\l}"];
+
+    // --- Tracking Data ---
+  EyeTracking [label="{EyeTracking|+ eye_id : UUID\l+ run_id : UUID (FK)\l+ frame_number : int (FK)\l+ position : vector3\l+ rotation : quaternion\l+ pupil_size : float\l+ hit_object : text\l}"];
+    FaceTracking [label="{FaceTracking|+ face_id : UUID\l+ run_id : UUID (FK)\l+ frame_number : int (FK)\l+ coefficients[60] : float\l}"];
+    BodyTracking [label="{BodyTracking|+ body_id : UUID\l+ run_id : UUID (FK)\l+ frame_number : int (FK)\l+ bone_name : text\l+ confidence : float\l+ position : vector3\l+ rotation : quaternion\l}"];
+    HandTracking [label="{HandTracking|+ hand_id : UUID\l+ run_id : UUID (FK)\l+ frame_number : int (FK)\l+ hand_side : enum(L/R)\l+ bone_name : text\l+ position : vector3\l+ rotation : quaternion\l}"];
+
+    // --- Variables ---
+  VariableMeta [label="{VariableMeta|+ variable_id : UUID\l+ name : text\l+ description : text\l+ scope : enum(Global/Local)\l+ type : text\l+ data_type : text\l}"];
+    VariableUpdate [label="{VariableUpdate|+ update_id : UUID\l+ run_id : UUID (FK)\l+ variable_id : UUID (FK)\l+ timestamp : timestamp\l+ modifier : text\l+ value : text\l}"];
+
+    // --- Relationships ---
+  Researcher -> Experience [label="1..*"];
+    Experience -> SessionType [label="1..*"];
+    Experience -> Run [label="1..*"];
+    Experience -> Epoch [label="1..*"];
+    Run -> ExperienceExecution [label="1..*"];
+    Run -> EventPoint [label="1..*"];
+    EventPoint -> Action [label="1..*"];
+    Run -> EyeTracking [label="0..*"];
+    Run -> FaceTracking [label="0..*"];
+    Run -> BodyTracking [label="0..*"];
+    Run -> HandTracking [label="0..*"];
+    Run -> VariableUpdate [label="0..*"];
+    VariableMeta -> VariableUpdate [label="1..*"];
+    Run -> RunDevice [label="0..*"];
+    Run -> RunSoftware [label="0..*"];
+    Device -> RunDevice [label="1..*"];
+    Software -> RunSoftware [label="1..*"];
+}

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/enums/body.side.enum.json",
+  "title": "bodySideEnum",
+  "description": "Enumeration of anatomical sides for bilateral or midline body parts.",
+  "type": "string",
+  "enum": ["left", "right", "centre", "none"],
+  "examples": ["left", "right"]
+}

@@ -1,0 +1,25 @@
+{
+  "objectId": "4f3e5f84-7b92-4a8a-bc4a-21e3f19dbf87",
+  "label": "Puzzle Box",
+  "type": "interactive",
+  "metadata": {
+    "isKinematic": false,
+    "isStatic": false,
+    "mass": 1.2,
+    "drag": 0.1,
+    "angularDrag": 0.05,
+    "useGravity": true,
+    "collisionDetectionMode": "continuous",
+    "renderLayer": "interactiveObjects",
+    "interactable": {
+      "enabled": true,
+      "interactionLayer": "grabbable",
+      "grabbable": true,
+      "hoverHighlight": true,
+      "selectable": false,
+      "socketable": true
+    },
+    "tags": ["grabbable", "manipulable", "puzzle"]
+  },
+  "movedTo": "examples/meta/interactive.meta.example.json"
+}

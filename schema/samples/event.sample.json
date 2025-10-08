@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/samples/_deprecated_event.json",
+  "deprecated": true,
+  "movedTo": "https://mind-schema.org/schema/types/event.json",
+  "$comment": "This file previously wrapped def/event.def.json. Use canonical types/event.json instead."
+}

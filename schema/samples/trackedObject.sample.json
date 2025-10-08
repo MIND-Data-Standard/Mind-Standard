@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/samples/trackedObject.json",
+  "$comment": "MIND harmonised 2025-10 — unified per-frame sample schema for all tracked objects",
+  "title": "trackedObjectSample",
+  "description": "Universal time series sample for any tracked object type (bone, interactive, hand, etc.). Structural differences are defined only in metadata.",
+  "type": "object",
+  "properties": {
+    "objectId": { "type": "string", "format": "uuid", "description": "Globally unique identifier of the tracked object to which this sample belongs." },
+    "timestamp": { "$ref": "https://mind-schema.org/schema/primitives/timestamp.json", "description": "Temporal identifier for this sample, using the MIND timestamp definition." },
+    "poseData": { "$ref": "https://mind-schema.org/schema/types/pose.json", "description": "Complete 6-DOF pose of the tracked object, including position and rotation." },
+    "scale": { "$ref": "https://mind-schema.org/schema/primitives/vector3.json", "description": "Optional local scale of the object (applicable to interactive or deformable objects)." },
+    "velocity": { "$ref": "https://mind-schema.org/schema/primitives/vector3.json", "description": "Optional linear velocity of the object in metres per second." },
+    "angularVelocity": { "$ref": "https://mind-schema.org/schema/primitives/vector3.json", "description": "Optional angular velocity of the object in radians per second." },
+    "state": { "type": "string", "description": "Optional dynamic state label (e.g., 'idle', 'grabbed', 'hovered')." },
+    "extensions": { "type": "object", "description": "Optional object for experiment- or device-specific additional fields.", "additionalProperties": true }
+  },
+  "required": ["objectId", "timestamp", "poseData"],
+  "additionalProperties": false
+}

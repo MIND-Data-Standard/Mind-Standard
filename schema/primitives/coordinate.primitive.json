@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/primitives/coordinate.json",
+  "title": "coordinate",
+  "description": "Single scalar coordinate value used in vectors and rotations.",
+  "type": "number",
+  "x-ai": {
+    "dims": 1,
+    "dtype": "float32",
+    "unit": "dimensionless",
+    "order": ["value"],
+    "embeddingHint": "scalar"
+  }
+}

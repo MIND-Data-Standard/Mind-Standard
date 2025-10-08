@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/types/event.json",
+  "title": "event",
+  "description": "Standard event structure for behavioral/cognitive experiments and XR sessions.",
+  "type": "object",
+  "properties": {
+    "eventId": { "type": "string", "description": "Unique event identifier." },
+    "name": { "type": "string", "description": "Event name or label." },
+    "source": { "type": "string", "description": "Source of the event (e.g., device, software, user)." },
+    "type": { "type": "string", "description": "Event type or category." },
+    "timestamp": { "type": "string", "format": "date-time", "description": "ISO 8601 UTC timestamp." },
+    "parameters": { "type": "object", "description": "Event-specific parameters.", "additionalProperties": true },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1, "description": "Confidence score (0-1)." },
+    "extensions": { "type": "object", "description": "Custom extension fields for future compatibility.", "additionalProperties": true }
+  },
+  "required": ["eventId", "name", "timestamp"],
+  "additionalProperties": false
+}

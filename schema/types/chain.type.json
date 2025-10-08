@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/types/chain.json",
+  "title": "chain",
+  "description": "Definition of an ordered set of joints representing an articulated chain (e.g., a finger, arm, or spine).",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string", "description": "Chain identifier (e.g., 'leftIndex' or 'spine')." },
+    "region": { "$ref": "https://mind-schema.org/schema/enums/body.region.enum.json" },
+    "joints": {
+      "type": "array",
+      "description": "Ordered list of joint references from proximal to distal.",
+      "items": { "$ref": "https://mind-schema.org/schema/metas/joint.meta.json" },
+      "minItems": 2
+    }
+  },
+  "required": ["name", "joints"],
+  "additionalProperties": false
+}

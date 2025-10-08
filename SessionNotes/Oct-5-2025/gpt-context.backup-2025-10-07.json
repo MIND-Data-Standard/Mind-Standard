@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/context/mind.session.context.json",
+  "$comment": "MIND harmonised 2025-10 — hybrid session context capturing schema architecture, design rationale, and development continuity.",
+  "meta": {
+    "standard": "MIND Schema",
+    "version": "2025-10",
+    "sessionDate": "2025-10-05",
+    "summaryOfChanges": "Refactor of schema architecture separating static metadata (meta), reusable definitions (defs), and per-frame dynamic data (samples). Introduced metadataRef linking, removed restPose.def, unified tracking model, and aligned hand structures with OpenXR and UnityXRHands."
+  },
+
+  "structure": {
+    "def": {
+      "timestamp.def.json": "Defines timestamp with unixMicroseconds and frameIndex.",
+      "vector3.def.json": "3D coordinate triplet representing position, velocity, or direction.",
+      "quaternion.def.json": "4D quaternion for rotation representation.",
+      "coordinate.def.json": "Single numeric coordinate axis (float).",
+      "pose.def.json": "Compound definition combining position and orientation.",
+      "metadataRef.def.json": "Defines how samples link to static metadata entries via UUID, URI, or JSON Pointer."
+    },
+    "meta": {
+      "joint.meta.json": "Static metadata describing a single anatomical or virtual joint. Includes region, side, aliases, and cross-standard mapping references.",
+      "bone.meta.json": "Static metadata describing a bone connecting two joints. Includes direction, length, orientation, and references to its joints.",
+      "skeleton.meta.json": "Defines static topology of an anatomical or virtual skeleton including joints, bones, and hierarchical chains.",
+      "hand.meta.json": "Defines metadata for tracked hands, including tracking system, vendor, profile, coordinate conventions, and linked joint metadata."
+    },
+    "samples": {
+      "trackedObject.sample.json": "Base sample schema for all tracked entities (pose, timestamp, scale, velocity).",
+      "joint.sample.json": "Per-frame joint pose sample referencing joint.meta.json via metadataRef.",
+      "bone.sample.json": "Per-frame bone sample referencing bone.meta.json via metadataRef.",
+      "hand.sample.json": "Aggregated hand sample combining multiple joint (and optionally bone) samples, referencing hand.meta.json."
+    },
+    "enums": {
+      "body.region.enum.json": "Enumerates anatomical regions (hand, arm, leg, spine, head, etc.).",
+      "body.side.enum.json": "Enumerates body sides: left, right, centre.",
+      "body.role.enum.json": "Defines functional joint or bone roles within each region.",
+      "hand.bone.enum.json": "Enumerates hand-specific bone names.",
+      "hand.finger.enum.json": "Enumerates finger groups (thumb, index, middle, ring, little).",
+      "hand.joint.enum.json": "Enumerates canonical hand joints aligned with OpenXR and Unity XRHands."
+    },
+    "maps": {
+      "hand.joint.map.json": "Canonical hand joint reference map with cross-standard aliases.",
+      "hand.skeleton.map.json": "Graph-level hand skeleton structure defining connectivity and chain relationships."
+    }
+  },
+
+  "dependencies": {
+    "trackedObject.sample.json": ["timestamp.def.json", "pose.def.json", "vector3.def.json"],
+    "joint.sample.json": ["trackedObject.sample.json", "metadataRef.def.json"],
+    "bone.sample.json": ["trackedObject.sample.json", "metadataRef.def.json", "bone.meta.json"],
+    "hand.sample.json": ["joint.sample.json", "bone.sample.json", "metadataRef.def.json", "hand.meta.json"],
+    "bone.meta.json": ["joint.meta.json", "vector3.def.json", "quaternion.def.json"],
+    "skeleton.meta.json": ["joint.meta.json", "bone.meta.json", "chain.def.json"],
+    "hand.meta.json": ["joint.meta.json", "hand.joint.enum.json"],
+    "joint.meta.json": ["body.region.enum.json", "body.side.enum.json", "body.role.enum.json"]
+  },
+
+  "designPrinciples": {
+    "meta_vs_def": "Meta files describe static, time-invariant structures (e.g., bone, joint, hand, skeleton). Def files define reusable data types. Sample files describe per-frame or dynamic data streams.",
+    "restPose_refactor": "Removed restPose.def.json and embedded directional/positional fields directly within bone.meta.json and joint.meta.json for simplicity and consistency.",
+    "metadataRef": "Introduced metadataRef.def.json to standardize linking between dynamic samples and static metadata. Supports UUID, URI, or JSON Pointer referencing.",
+    "pose_composition": "All pose and motion data derive from common vector3 and quaternion definitions, ensuring consistent mathematical interoperability across SDKs.",
+    "hand_alignment": "Hand schemas align with OpenXR’s XR_EXT_hand_tracking structure while supporting aliases for UnityXRHands, WebXR, and LeapMotion.",
+    "schema_modularity": "Small, composable defs allow lightweight code generation, schema validation, and cross-language SDK consistency.",
+    "body_vs_hand_split": "Maintained distinct enum and alias systems for body and hand tracking to preserve compatibility with major XR and motion capture systems.",
+    "samples_reference_static_meta": "All samples now reference immutable metadata rather than duplicating static structural fields, improving compression and interoperability."
+  },
+
+  "nextSteps": [
+    "Consider conditional timestamp omission for nested samples (e.g., joints within a hand sample).",
+    "Verify that hand.skeleton.map.json joint references match indices defined in hand.joint.map.json.",
+    "Define body-level skeleton.meta.json to mirror hand-level consistency.",
+    "Extend meta and enum schemas for facial and full-body tracking.",
+    "Implement dataset/session-level metadata for contextual recording and participant info.",
+    "Generate language bindings (Python/C#) directly from defs and meta schemas.",
+    "Validate that metadataRef resolution (UUID, URI, JSON Pointer) performs correctly in tooling."
+  ],
+
+  "integrationNotes": {
+    "languageBindings": {
+      "CSharp": ".NET Standard 2.1 classes follow System.Runtime.InteropServices.StructLayout conventions.",
+      "Python": "PEP-8 style dataclasses with JSON validation using jsonschema or pydantic."
+    },
+    "interoperability": {
+      "relatedStandards": ["OpenXR", "UnityXRHands", "WebXR", "LeapMotion", "VRM", "NWB", "OpenMINDS", "BIDS"],
+      "goal": "Provide unified schema for XR and behavioural neuroscience interoperability."
+    }
+  }
+}
+

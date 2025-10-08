@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/enums/body.bone.enum.json",
+  "title": "bodyBoneEnum",
+  "description": "Enumeration of bone types across the human body, excluding hands. Derived from OpenXR XRBodyJointSetFB, VRM, and Mixamo humanoid standards.",
+  "type": "string",
+  "enum": [
+    "root",
+    "carpal",
+    "tarsal",
+    "radius",
+    "ulna",
+    "humerus",
+    "clavicle",
+    "scapula",
+    "sternum",
+    "rib",
+    "pelvis",
+    "femur",
+    "tibia",
+    "fibula",
+    "vertebra",
+    "cranial",
+    "mandibular",
+    "none"
+  ],
+  "examples": ["femur", "vertebra"]
+}

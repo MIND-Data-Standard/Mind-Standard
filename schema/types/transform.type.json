@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/types/transform.json",
+  "title": "transform",
+  "description": "Full spatial transform of a scene object, including position, rotation, and scale. Used for non-bone, virtual, or environmental objects.",
+  "type": "object",
+  "properties": {
+    "position": { "$ref": "https://mind-schema.org/schema/primitives/vector3.json", "description": "3D position vector (metres) in the reference coordinate system." },
+    "rotation": { "$ref": "https://mind-schema.org/schema/primitives/quaternion.json", "description": "Orientation as a unit quaternion (x, y, z, w)." },
+    "scale": { "$ref": "https://mind-schema.org/schema/primitives/vector3.json", "description": "Scale factor for each axis. (1,1,1) = unscaled." },
+    "space": { "type": "string", "description": "Reference coordinate space (e.g., world, local, stage, display).", "default": "world" }
+  },
+  "required": ["position", "rotation", "scale"],
+  "additionalProperties": false,
+  "x-ai": {
+    "dims": 10,
+    "dtype": "float32",
+    "order": [
+      "position.x", "position.y", "position.z",
+      "rotation.x", "rotation.y", "rotation.z", "rotation.w",
+      "scale.x", "scale.y", "scale.z"
+    ],
+    "units": { "position": "metre", "rotation": "dimensionless", "scale": "dimensionless" },
+    "embeddingHint": "pos+quat+scale"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/samples/_deprecated_action.json",
+  "deprecated": true,
+  "movedTo": "https://mind-schema.org/schema/types/action.json",
+  "$comment": "This file previously wrapped def/action.def.json. Use canonical types/action.json instead."
+}

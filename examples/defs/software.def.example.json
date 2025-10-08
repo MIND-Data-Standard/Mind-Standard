@@ -1,0 +1,8 @@
+{
+  "$schema": "https://mind-schema.org/schemas/def/software.def.json",
+  "name": "MIND Toolkit",
+  "version": "1.0.0",
+  "vendor": "MIND Project",
+  "description": "Reference toolkit for processing MIND datasets"
+}
+

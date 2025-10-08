@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/samples/hand.json",
+  "$comment": "MIND harmonised 2025-10 — per-frame hand tracking sample aligned with OpenXR joint and bone hierarchies.",
+  "title": "handSample",
+  "description": "Per-frame pose sample for a tracked hand. Each sample references static hand metadata and contains both joint and bone samples.",
+  "type": "object",
+  "properties": {
+    "metadataRef": { "$ref": "https://mind-schema.org/schema/types/metadataRef.json", "description": "Reference to the static metadata entry describing this hand (hand.meta.json)." },
+    "timestamp": { "$ref": "https://mind-schema.org/schema/primitives/timestamp.json", "description": "Timestamp for this sample, defined using MIND's temporal format." },
+    "jointSamples": {
+      "type": "array",
+      "description": "Array of per-joint samples captured for this frame, defined using joint sample schema.",
+      "items": { "$ref": "https://mind-schema.org/schema/samples/joint.json" },
+      "minItems": 1
+    },
+    "boneSamples": {
+      "type": "array",
+      "description": "Optional array of per-bone samples captured for this frame, defined using bone sample schema.",
+      "items": { "$ref": "https://mind-schema.org/schema/samples/bone.json" }
+    },
+    "trackingConfidence": { "type": "number", "minimum": 0, "maximum": 1, "description": "Optional overall confidence level for the hand tracking system at this frame." },
+    "state": { "type": "string", "description": "Optional high-level state label for the hand (e.g., 'open', 'closed', 'pinch', 'point')." }
+  },
+  "required": ["metadataRef", "timestamp", "jointSamples"],
+  "additionalProperties": false
+}

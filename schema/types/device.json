@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/types/device.json",
+  "title": "device",
+  "description": "Primitive structure for device variables only.",
+  "type": "object",
+  "properties": {
+    "type": { "type": "string", "description": "Device type/category (e.g., EEG, HMD, controller)." },
+    "manufacturer": { "type": "string", "description": "Device manufacturer." },
+    "model": { "type": "string", "description": "Device model name/number." }
+  },
+  "required": ["type", "manufacturer", "model"],
+  "additionalProperties": false
+}
+

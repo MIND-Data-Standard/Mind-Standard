@@ -1,0 +1,29 @@
+{
+  "objectId": "9a8b83b6-8e9f-47c0-9f75-512a77b6e64e",
+  "timestamp": {
+    "unixMicroseconds": 1728209840234123,
+    "frameIndex": 1284
+  },
+  "jointSamples": [
+    {
+      "jointName": "wrist",
+      "poseData": {
+        "position": { "x": 0.02, "y": 1.45, "z": 0.38 },
+        "rotationQuaternion": { "x": 0.0, "y": 0.7, "z": 0.0, "w": 0.7 }
+      },
+      "confidence": 0.99
+    },
+    {
+      "jointName": "indexTip",
+      "poseData": {
+        "position": { "x": 0.05, "y": 1.42, "z": 0.32 },
+        "rotationQuaternion": { "x": 0.0, "y": 0.0, "z": 0.0, "w": 1.0 }
+      },
+      "velocity": { "x": 0.01, "y": 0.0, "z": -0.02 },
+      "confidence": 0.92
+    }
+  ],
+  "trackingConfidence": 0.95,
+  "state": "pinch",
+  "movedTo": "examples/samples/hand.collection.json"
+}

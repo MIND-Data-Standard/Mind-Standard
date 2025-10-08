@@ -1,0 +1,28 @@
+{
+  "$schema": "https://mind-schema.org/schemas/recording.schema.json",
+  "recordingId": "example-session-001",
+  "timestampStart": "2025-10-06T12:00:00Z",
+  "participant": {
+    "participantId": "P001"
+  },
+  "devices": [
+    {
+      "deviceId": "dev001",
+      "type": "placeholder",
+      "label": "Example Device"
+    }
+  ],
+  "streams": [
+    {
+      "streamId": "stream001",
+      "type": "placeholder",
+      "label": "Example Stream"
+    }
+  ],
+  "events": [],
+  "modelOutputs": [],
+  "analysis": {},
+  "metadata": {},
+  "provenance": {},
+  "extensions": {}
+}

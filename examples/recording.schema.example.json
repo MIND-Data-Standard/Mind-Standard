@@ -1,0 +1,9 @@
+{
+  "$schema": "https://mind-schema.org/schemas/recording.schema.json",
+  "recordingId": "rec-001",
+  "timestampStart": "2025-10-07T09:00:00Z",
+  "participant": { "$schema": "https://mind-schema.org/schemas/participant.schema.json", "participantId": "p-001" },
+  "devices": [ { "name": "Ultraleap Controller" } ],
+  "streams": [ { "name": "handTracking", "type": "pose" } ]
+}
+

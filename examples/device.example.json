@@ -1,0 +1,12 @@
+{
+  "$schema": "https://mind-schema.org/schemas/def/device.def.json",
+  "deviceId": "dev002",
+  "name": "Ultraleap Controller",
+  "type": "HandTracking",
+  "manufacturer": "Ultraleap",
+  "model": "Leap Motion",
+  "serialNumber": "UL123456789",
+  "softwareVersion": "v5.2.0",
+  "extensions": {},
+  "movedTo": "examples/defs/device.def.example.json"
+}

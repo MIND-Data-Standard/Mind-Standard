@@ -1,0 +1,26 @@
+{
+  "goal": "<What are we doing next?>",
+  "acceptanceCriteria": [
+    "<Bullet that can be verified>",
+    "<Another measurable criterion>"
+  ],
+  "keyFiles": [
+    "<repo-relative/path/to/file.ext>"
+  ],
+  "decisions": [
+    "<Decision made and why>"
+  ],
+  "openTodos": [
+    "<Next small task>",
+    "<Another small task>"
+  ],
+  "commands": {
+    "validate_examples": "npx ajv-cli validate -s schema/recording.schema.json -d examples/test-recording.json",
+    "lint_markdown": "echo Skipping markdown lint; add a linter if needed",
+    "draw_graph": "echo Graphs are pre-rendered in schema/visual; update as needed"
+  ],
+  "checkpoints": [
+    { "timestamp": "<YYYY-MM-DD>", "note": "<What changed>" }
+  ]
+}
+

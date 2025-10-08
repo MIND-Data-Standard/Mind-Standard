@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/enums/body.role.enum.json",
+  "title": "bodyRoleEnum",
+  "description": "Functional or hierarchical role of a joint or bone within its anatomical region.",
+  "type": "string",
+  "enum": ["root", "segment", "anchor", "joint", "pivot", "endEffector"],
+  "examples": ["root", "segment"]
+}

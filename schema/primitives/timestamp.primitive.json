@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/primitives/timestamp.json",
+  "title": "timestamp",
+  "description": "Temporal identifier for a tracked sample in microseconds and optional frame index.",
+  "type": "object",
+  "properties": {
+    "unixMicroseconds": {
+      "type": "integer",
+      "description": "Unix time in microseconds (UTC)."
+    },
+    "frameIndex": {
+      "type": "integer",
+      "description": "Optional frame index within the recording (−1 if undefined).",
+      "default": -1
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Custom extension fields for future compatibility.",
+      "additionalProperties": true
+    }
+  },
+  "required": ["unixMicroseconds"],
+  "additionalProperties": false,
+  "x-ai": {
+    "dims": 1,
+    "dtype": "int64",
+    "unit": "microsecond",
+    "order": ["unixMicroseconds"],
+    "embeddingHint": "time-us"
+  }
+}

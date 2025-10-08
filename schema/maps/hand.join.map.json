@@ -1,0 +1,259 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/maps/hand.joint.map.json",
+  "$comment": "MIND harmonised 2025-10 — canonical 26-joint hand map including OpenXR, Unity XRHands, WebXR, and LeapMotion aliases, compatible with joint.meta.json.",
+  "title": "handJointMap",
+  "description": "Structured reference map for all hand joints used in MIND. Includes canonical indices, hierarchy, finger group, role, and cross-standard naming aliases for major SDKs.",
+
+  "type": "array",
+  "items": {
+    "allOf": [
+      { "$ref": "https://mind-schema.org/schema/meta/joint.meta.json" },
+      {
+        "type": "object",
+        "required": ["index", "name", "finger", "role"],
+        "properties": {
+          "index": {
+            "type": "integer",
+            "description": "Canonical numeric index for the joint (e.g., matches OpenXR joint index)."
+          },
+          "finger": {
+            "$ref": "https://mind-schema.org/schema/enums/hand.finger.enum.json"
+          },
+          "role": {
+            "$ref": "https://mind-schema.org/schema/enums/body.role.enum.json"
+          },
+          "parent": {
+            "type": ["string", "null"],
+            "description": "Parent joint name or null if this joint is the root."
+          },
+          "aliases": {
+            "type": "object",
+            "description": "Cross-standard naming equivalents for interoperability.",
+            "properties": {
+              "openxr": { "type": "string" },
+              "unityXRHands": { "type": "string" },
+              "webxr": { "type": "string" },
+              "leapMotion": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        }
+      }
+    ]
+  },
+  "default": [
+    { "index": 0, "name": "wrist", "finger": "none", "role": "root", "parent": null,
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_WRIST_EXT",
+        "unityXRHands": "Wrist",
+        "webxr": "wrist",
+        "leapMotion": "Wrist"
+      }
+    },
+    { "index": 1, "name": "palm", "finger": "none", "role": "segment", "parent": "wrist",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_PALM_EXT",
+        "unityXRHands": "Palm",
+        "webxr": "palm",
+        "leapMotion": "Palm"
+      }
+    },
+    { "index": 2, "name": "thumbMetacarpal", "finger": "thumb", "role": "metacarpal", "parent": "palm",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_THUMB_METACARPAL_EXT",
+        "unityXRHands": "ThumbMetacarpal",
+        "webxr": "thumb-metacarpal",
+        "leapMotion": "Thumb0"
+      }
+    },
+    { "index": 3, "name": "thumbProximal", "finger": "thumb", "role": "proximal", "parent": "thumbMetacarpal",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_THUMB_PROXIMAL_EXT",
+        "unityXRHands": "ThumbProximal",
+        "webxr": "thumb-phalanx-proximal",
+        "leapMotion": "Thumb1"
+      }
+    },
+    { "index": 4, "name": "thumbDistal", "finger": "thumb", "role": "distal", "parent": "thumbProximal",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_THUMB_DISTAL_EXT",
+        "unityXRHands": "ThumbDistal",
+        "webxr": "thumb-phalanx-distal",
+        "leapMotion": "Thumb2"
+      }
+    },
+    { "index": 5, "name": "thumbTip", "finger": "thumb", "role": "tip", "parent": "thumbDistal",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_THUMB_TIP_EXT",
+        "unityXRHands": "ThumbTip",
+        "webxr": "thumb-tip",
+        "leapMotion": "Thumb3"
+      }
+    },
+
+    { "index": 6, "name": "indexMetacarpal", "finger": "index", "role": "metacarpal", "parent": "palm",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_INDEX_METACARPAL_EXT",
+        "unityXRHands": "IndexMetacarpal",
+        "webxr": "index-finger-metacarpal",
+        "leapMotion": "Index0"
+      }
+    },
+    { "index": 7, "name": "indexProximal", "finger": "index", "role": "proximal", "parent": "indexMetacarpal",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_INDEX_PROXIMAL_EXT",
+        "unityXRHands": "IndexProximal",
+        "webxr": "index-finger-phalanx-proximal",
+        "leapMotion": "Index1"
+      }
+    },
+    { "index": 8, "name": "indexIntermediate", "finger": "index", "role": "intermediate", "parent": "indexProximal",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_INDEX_INTERMEDIATE_EXT",
+        "unityXRHands": "IndexIntermediate",
+        "webxr": "index-finger-phalanx-intermediate",
+        "leapMotion": "Index2"
+      }
+    },
+    { "index": 9, "name": "indexDistal", "finger": "index", "role": "distal", "parent": "indexIntermediate",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_INDEX_DISTAL_EXT",
+        "unityXRHands": "IndexDistal",
+        "webxr": "index-finger-phalanx-distal",
+        "leapMotion": "Index3"
+      }
+    },
+    { "index": 10, "name": "indexTip", "finger": "index", "role": "tip", "parent": "indexDistal",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_INDEX_TIP_EXT",
+        "unityXRHands": "IndexTip",
+        "webxr": "index-finger-tip",
+        "leapMotion": "Index4"
+      }
+    },
+
+    { "index": 11, "name": "middleMetacarpal", "finger": "middle", "role": "metacarpal", "parent": "palm",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_MIDDLE_METACARPAL_EXT",
+        "unityXRHands": "MiddleMetacarpal",
+        "webxr": "middle-finger-metacarpal",
+        "leapMotion": "Middle0"
+      }
+    },
+    { "index": 12, "name": "middleProximal", "finger": "middle", "role": "proximal", "parent": "middleMetacarpal",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_MIDDLE_PROXIMAL_EXT",
+        "unityXRHands": "MiddleProximal",
+        "webxr": "middle-finger-phalanx-proximal",
+        "leapMotion": "Middle1"
+      }
+    },
+    { "index": 13, "name": "middleIntermediate", "finger": "middle", "role": "intermediate", "parent": "middleProximal",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_MIDDLE_INTERMEDIATE_EXT",
+        "unityXRHands": "MiddleIntermediate",
+        "webxr": "middle-finger-phalanx-intermediate",
+        "leapMotion": "Middle2"
+      }
+    },
+    { "index": 14, "name": "middleDistal", "finger": "middle", "role": "distal", "parent": "middleIntermediate",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_MIDDLE_DISTAL_EXT",
+        "unityXRHands": "MiddleDistal",
+        "webxr": "middle-finger-phalanx-distal",
+        "leapMotion": "Middle3"
+      }
+    },
+    { "index": 15, "name": "middleTip", "finger": "middle", "role": "tip", "parent": "middleDistal",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_MIDDLE_TIP_EXT",
+        "unityXRHands": "MiddleTip",
+        "webxr": "middle-finger-tip",
+        "leapMotion": "Middle4"
+      }
+    },
+
+    { "index": 16, "name": "ringMetacarpal", "finger": "ring", "role": "metacarpal", "parent": "palm",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_RING_METACARPAL_EXT",
+        "unityXRHands": "RingMetacarpal",
+        "webxr": "ring-finger-metacarpal",
+        "leapMotion": "Ring0"
+      }
+    },
+    { "index": 17, "name": "ringProximal", "finger": "ring", "role": "proximal", "parent": "ringMetacarpal",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_RING_PROXIMAL_EXT",
+        "unityXRHands": "RingProximal",
+        "webxr": "ring-finger-phalanx-proximal",
+        "leapMotion": "Ring1"
+      }
+    },
+    { "index": 18, "name": "ringIntermediate", "finger": "ring", "role": "intermediate", "parent": "ringProximal",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_RING_INTERMEDIATE_EXT",
+        "unityXRHands": "RingIntermediate",
+        "webxr": "ring-finger-phalanx-intermediate",
+        "leapMotion": "Ring2"
+      }
+    },
+    { "index": 19, "name": "ringDistal", "finger": "ring", "role": "distal", "parent": "ringIntermediate",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_RING_DISTAL_EXT",
+        "unityXRHands": "RingDistal",
+        "webxr": "ring-finger-phalanx-distal",
+        "leapMotion": "Ring3"
+      }
+    },
+    { "index": 20, "name": "ringTip", "finger": "ring", "role": "tip", "parent": "ringDistal",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_RING_TIP_EXT",
+        "unityXRHands": "RingTip",
+        "webxr": "ring-finger-tip",
+        "leapMotion": "Ring4"
+      }
+    },
+
+    { "index": 21, "name": "littleMetacarpal", "finger": "little", "role": "metacarpal", "parent": "palm",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_LITTLE_METACARPAL_EXT",
+        "unityXRHands": "LittleMetacarpal",
+        "webxr": "little-finger-metacarpal",
+        "leapMotion": "Pinky0"
+      }
+    },
+    { "index": 22, "name": "littleProximal", "finger": "little", "role": "proximal", "parent": "littleMetacarpal",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_LITTLE_PROXIMAL_EXT",
+        "unityXRHands": "LittleProximal",
+        "webxr": "little-finger-phalanx-proximal",
+        "leapMotion": "Pinky1"
+      }
+    },
+    { "index": 23, "name": "littleIntermediate", "finger": "little", "role": "intermediate", "parent": "littleProximal",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_LITTLE_INTERMEDIATE_EXT",
+        "unityXRHands": "LittleIntermediate",
+        "webxr": "little-finger-phalanx-intermediate",
+        "leapMotion": "Pinky2"
+      }
+    },
+    { "index": 24, "name": "littleDistal", "finger": "little", "role": "distal", "parent": "littleIntermediate",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_LITTLE_DISTAL_EXT",
+        "unityXRHands": "LittleDistal",
+        "webxr": "little-finger-phalanx-distal",
+        "leapMotion": "Pinky3"
+      }
+    },
+    { "index": 25, "name": "littleTip", "finger": "little", "role": "tip", "parent": "littleDistal",
+      "aliases": {
+        "openxr": "XR_HAND_JOINT_LITTLE_TIP_EXT",
+        "unityXRHands": "LittleTip",
+        "webxr": "little-finger-tip",
+        "leapMotion": "Pinky4"
+      }
+    }
+  ]
+}

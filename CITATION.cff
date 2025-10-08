@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use MIND in your research, please cite as below."
+authors: 
+  - family-names: Thomas
+    given-names: Maryse
+    affiliation: SilicoLabs
+  - family-names: Alsbury-Nealy
+    given-names: Kyla
+    affiliation: SilicoLabs
+  - family-names: Alsbury-Nealy
+    given-names: Benjamin
+    affiliation: SilicoLabs 
+title: "MIND: Multimodal Integration of Neural & behavioural Data"
+version: 1.0.0
+license: "MIT"
+repository-code: "https://github.com/SilicoLabs/MIND-Standard"
+abstract: >
+  The MIND Standard defines an open schema for capturing multimodal human data,
+  including behavioural, physiological, and neural signals, in a unified, AI-ready format.

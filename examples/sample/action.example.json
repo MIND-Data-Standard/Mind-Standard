@@ -1,0 +1,2 @@
+{ "$schema": "https://mind-schema.org/schemas/sample/action.json", "type": "gazeSelect", "parameters": { "target": "buttonB" }, "confidence": 0.98 }
+

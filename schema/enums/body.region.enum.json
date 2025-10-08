@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/enums/body.region.enum.json",
+  "title": "bodyRegion",
+  "description": "Canonical list of body regions recognised by the MIND Standard.",
+  "type": "string",
+  "enum": [
+    "hand",
+    "arm",
+    "leg",
+    "spine",
+    "head",
+    "face",
+    "body",
+    "other"
+  ],
+  "examples": ["hand", "face", "body"]
+}

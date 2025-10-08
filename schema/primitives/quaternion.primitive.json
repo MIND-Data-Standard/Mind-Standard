@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/primitives/quaternion.json",
+  "title": "quaternion",
+  "description": "Quaternion rotation structure (x, y, z, w).",
+  "type": "object",
+  "properties": {
+    "x": { "$ref": "https://mind-schema.org/schema/primitives/coordinate.json" },
+    "y": { "$ref": "https://mind-schema.org/schema/primitives/coordinate.json" },
+    "z": { "$ref": "https://mind-schema.org/schema/primitives/coordinate.json" },
+    "w": { "$ref": "https://mind-schema.org/schema/primitives/coordinate.json" }
+  },
+  "required": ["x", "y", "z", "w"],
+  "additionalProperties": false,
+  "x-ai": {
+    "dims": 4,
+    "dtype": "float32",
+    "unit": "dimensionless",
+    "order": ["x", "y", "z", "w"],
+    "embeddingHint": "unit-quaternion"
+  }
+}

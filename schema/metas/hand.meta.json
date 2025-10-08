@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/metas/hand.meta.json",
+  "$comment": "MIND harmonised 2025-10 — static metadata describing a tracked hand, including provenance, structure, and coordinate conventions.",
+  "title": "handMeta",
+  "description": "Static metadata describing a tracked hand, including device and tracking system provenance, joint and bone hierarchy, and coordinate conventions. Enables interoperability across hand-tracking SDKs and hardware platforms.",
+
+  "type": "object",
+  "properties": {
+    "region": {
+      "type": "string",
+      "const": "hand",
+      "description": "Fixed region identifier for this metadata type."
+    },
+    "side": {
+      "$ref": "https://mind-schema.org/schema/enums/body.side.enum.json",
+      "description": "Anatomical side of the hand being tracked."
+    },
+
+    "trackingSystem": {
+      "type": "string",
+      "description": "Name of the hand-tracking software framework or SDK (e.g., 'OpenXR', 'Ultraleap', 'ARKit', 'Manus Core', 'Custom')."
+    },
+    "trackingProfile": {
+      "type": "string",
+      "description": "Specific joint definition or system profile used by the tracking system (e.g., 'XR_EXT_hand_tracking', 'UnityXRHands')."
+    },
+    "trackingVersion": {
+      "type": "string",
+      "description": "Version or API level of the tracking system."
+    },
+
+    "deviceVendor": {
+      "type": "string",
+      "description": "Manufacturer or vendor of the hand-tracking hardware (e.g., 'Meta', 'Varjo', 'Ultraleap', 'Apple')."
+    },
+    "deviceModel": {
+      "type": "string",
+      "description": "Specific model name or identifier for the device used to capture hand-tracking data."
+    },
+    "sourceURI": {
+      "type": "string",
+      "description": "Optional URI or identifier linking to detailed device calibration or configuration information."
+    },
+
+    "skeleton": {
+      "$ref": "https://mind-schema.org/schema/metas/skeleton.meta.json",
+      "description": "Optional reference to a detailed skeleton metadata object defining this hand’s joint and bone topology."
+    },
+
+    "joints": {
+      "type": "array",
+      "description": "List of all joint metadata objects for this hand, following the chosen tracking standard (e.g., OpenXR, UnityXRHands).",
+      "items": {
+        "oneOf": [
+          { "$ref": "https://mind-schema.org/schema/metas/joint.meta.json" },
+          { "type": "string" }
+        ]
+      },
+      "uniqueItems": true
+    },
+
+    "bones": {
+      "type": "array",
+      "description": "List of all bone metadata objects connecting hand joints.",
+      "items": {
+        "oneOf": [
+          { "$ref": "https://mind-schema.org/schema/metas/bone.meta.json" },
+          { "type": "string" }
+        ]
+      },
+      "uniqueItems": true
+    },
+
+    "jointCount": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 26,
+      "description": "Number of joints defined in this hand skeleton (e.g., 26 for a full OpenXR hand)."
+    },
+
+    "coordinateSystem": {
+      "type": "string",
+      "enum": ["rightHanded", "leftHanded"],
+      "description": "Coordinate system convention for spatial data."
+    },
+    "unit": {
+      "type": "string",
+      "enum": ["metres"],
+      "description": "Measurement unit for positional data. Always metres in the MIND standard."
+    },
+
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional freeform labels (e.g., 'XRHand', 'gestureTracking', 'riggedMeshCompatible')."
+    },
+
+    "metadata": {
+      "type": "object",
+      "description": "Optional extended metadata such as calibration parameters, offsets, or confidence scores.",
+      "additionalProperties": true
+    },
+
+    "extensions": {
+      "type": "object",
+      "description": "Custom extension fields for future compatibility.",
+      "additionalProperties": true
+    }
+  },
+
+  "required": [
+    "region",
+    "side",
+    "trackingSystem",
+    "joints",
+    "coordinateSystem",
+    "unit"
+  ],
+  "additionalProperties": false
+}

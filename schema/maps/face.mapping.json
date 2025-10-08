@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/maps/face.mapping.json",
+  "title": "faceAliasMapping",
+  "description": "Alias mapping for facial landmarks or features to external standards (e.g., ARKit, OpenFace).",
+  "type": "object",
+  "additionalProperties": { "oneOf": [ { "type": "string" }, { "type": "array", "items": { "type": "string" }, "minItems": 1 } ] }
+}
+

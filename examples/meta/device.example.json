@@ -1,0 +1,7 @@
+{
+  "$schema": "https://mind-schema.org/schemas/meta/device.meta.json",
+  "type": "HMD",
+  "manufacturer": "Meta",
+  "model": "Quest Pro",
+  "movedTo": "examples/meta/device.meta.example.json"
+}

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/maps/hand.mapping.json",
+  "title": "handAliasMapping",
+  "description": "Alias mapping for hand-related joints to external standards (e.g., OpenXR, Unity XRHands, WebXR, Leap). Keys are standard identifiers; values are strings or arrays of strings.",
+  "type": "object",
+  "additionalProperties": { "oneOf": [ { "type": "string" }, { "type": "array", "items": { "type": "string" }, "minItems": 1 } ] }
+}
+

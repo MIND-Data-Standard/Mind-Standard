@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/metas/joint.meta.json",
+  "$comment": "MIND harmonised 2025-10 — static metadata describing a single anatomical or virtual joint within a skeleton, with inlined rest pose parameters.",
+  "title": "jointMeta",
+  "description": "Static metadata describing a single joint. Includes anatomical region, side, inlined rest pose parameters, and region-specific alias mappings.",
+
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Canonical MIND joint name (e.g., 'rightWrist', 'indexProximal')."
+    },
+    "region": {
+      "$ref": "https://mind-schema.org/schema/enums/body.region.enum.json",
+      "description": "Anatomical region to which this joint belongs (e.g., hand, arm, leg, spine)."
+    },
+    "role": {
+      "$ref": "https://mind-schema.org/schema/enums/body.role.enum.json",
+      "description": "Functional or anatomical role of the joint within its region (e.g., root, distal, metacarpal, jaw)."
+    },
+    "side": {
+      "$ref": "https://mind-schema.org/schema/enums/body.side.enum.json",
+      "description": "Anatomical side associated with this joint: 'left', 'right', or 'centre'."
+    },
+    "restPosition": {
+      "$ref": "https://mind-schema.org/schema/primitives/vector3.json",
+      "description": "Joint position in rest configuration (metres, in local or model space)."
+    },
+    "restRotation": {
+      "$ref": "https://mind-schema.org/schema/primitives/quaternion.json",
+      "description": "Joint orientation in rest configuration, represented as a unit quaternion."
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Custom extension fields for future compatibility.",
+      "additionalProperties": true
+    }
+  },
+
+  "allOf": [
+    {
+      "if": { "properties": { "region": { "const": "hand" } } },
+      "then": {
+        "properties": {
+          "aliases": { "$ref": "https://mind-schema.org/schema/maps/hand.mapping.json" },
+          "finger": { "$ref": "https://mind-schema.org/schema/enums/hand.finger.enum.json" },
+          "bone": { "$ref": "https://mind-schema.org/schema/enums/hand.bone.enum.json" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "region": { "enum": ["arm", "leg", "spine", "head", "torso", "body"] }
+        }
+      },
+      "then": {
+        "properties": {
+          "aliases": { "$ref": "https://mind-schema.org/schema/maps/body.mapping.json" },
+          "bone": { "$ref": "https://mind-schema.org/schema/enums/body.bone.enum.json" }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "region": { "const": "face" } } },
+      "then": {
+        "properties": {
+          "aliases": { "$ref": "https://mind-schema.org/schema/maps/face.mapping.json" },
+          "facialFeature": { "$ref": "https://mind-schema.org/schema/enums/face.feature.enum.json" }
+        }
+      }
+    }
+  ],
+
+  "required": ["name", "region", "restPosition", "restRotation"],
+  "additionalProperties": false
+}

@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/context/mind.session.context.json",
+  "$comment": "MIND harmonised 2025-10 — session context capturing architecture, design rationale, and development continuity.",
+
+  "meta": {
+    "standard": "MIND Schema",
+    "version": "2025-10",
+    "sessionDate": "2025-10-05",
+    "summaryOfChanges": "Adopt primitive/type/sample/meta architecture. Add x-ai/x-storage guidance. Prepare migration away from legacy wrappers and any backwards-compat layers."
+  },
+
+  "policy": {
+    "backwardsCompatibility": "Not required going forward. Prefer clean breaks in this repo to converge on the canonical structure quickly.",
+    "canonicalIDs": "Stabilise canonical $id under /schemas/{primitive|type|sample|meta}/... and update all $ref accordingly.",
+    "examplesOnlyInExamplesFolder": "All example instance data must live under examples/** mirroring the schema folder structure. No example data should live under schema/**.",
+    "examplesNaming": "Example files must have the exact same filename as the schema they exemplify, with '.example.json' appended, and live under examples/ mirroring schema/. E.g., schema/meta/device.meta.json → examples/meta/device.meta.example.json; schema/primitives/vector3.primitive.json → examples/primitives/vector3.primitive.example.json; schema/types/pose.type.json → examples/types/pose.type.example.json."
+  },
+
+  "structure": {
+    "primitives": ["coordinate", "vector3", "quaternion", "timestamp"],
+    "types": ["pose", "velocity", "transform", "metadataRef"],
+    "samples": ["joint", "bone", "trackedObject", "hand", "device", "event", "action", "software"],
+    "meta": ["joint", "bone", "skeleton", "hand", "device", "event", "interactive", "software", "trackedObject"],
+    "enums": ["body.region", "body.side", "body.role", "hand.finger", "hand.bone", "hand.joint", "face.feature"],
+    "maps": ["hand.joint.map", "hand.skeleton.map"],
+
+    "wrappers": {
+      "note": "Legacy non-breaking wrappers were added to bridge to old defs. Since backwards compatibility is not required now, wrappers will be removed as part of migration.",
+      "primitives": [
+        "schema/primitives/coordinate.primitive.json",
+        "schema/primitives/vector3.primitive.json",
+        "schema/primitives/quaternion.primitive.json",
+        "schema/primitives/timestamp.primitive.json"
+      ],
+      "types": [
+        "schema/types/pose.type.json",
+        "schema/types/velocity.type.json",
+        "schema/types/transform.type.json",
+        "schema/types/metadataRef.type.json"
+      ],
+      "samples": [
+        "schema/sample/joint.json",
+        "schema/sample/bone.json",
+        "schema/sample/trackedObject.json",
+        "schema/sample/hand.json",
+        "schema/sample/device.json",
+        "schema/sample/event.json",
+        "schema/sample/action.json",
+        "schema/sample/software.json"
+      ]
+    },
+
+    "examplesPolicy": {
+      "mirrorSchema": "The examples/ folder mirrors the schema/ folder structure for discoverability.",
+      "locations": {
+        "primitive": "examples/primitives/{name}.example.json",
+        "type": "examples/types/{name}.example.json",
+        "sample": "examples/sample/{name}.example.json (single record) and examples/samples/{name}.collection.json (arrays or NDJSON)",
+        "meta": "examples/meta/{name}.example.json"
+      },
+      "migration": "Move any instance data under schema/** (e.g., schema/samples/*.sample.json) into examples/** and remove the data from schema/**."
+    }
+  },
+
+  "enumsAndMapsGuidance": {
+    "enums": {
+      "idPattern": "https://mind-schema.org/schemas/enums/{group}.{name}.enum.json",
+      "principles": [
+        "Enums define canonical, stable sets. Changes that remove or rename values are breaking and require a new major schema version.",
+        "Permit extension via x-enumAliases for cross-standard synonyms; deprecate old values using x-deprecated with rationale and sunset date.",
+        "Keep value strings short, lowerCamelCase, and self-descriptive."
+      ]
+    },
+    "maps": {
+      "purpose": "Mapping files provide cross-standard correspondence and graph/topology definitions (e.g., joint index mappings, skeleton connectivity).",
+      "idPattern": "https://mind-schema.org/schemas/maps/{name}.map.json",
+      "principles": [
+        "Mappings are data, not schemas of models. They should include source/target identifiers and optional confidence/notes.",
+        "Prefer referencing enums by value. Where indices are needed, document index origin and zero/one-based policy.",
+        "For graph maps (e.g., skeleton), define nodes and edges with clear directionality and optional weights/roles."
+      ]
+    }
+  },
+
+  "migrationPlan": {
+    "goal": "Remove backwards-compatibility wrappers/refs and converge on the canonical primitive/type/sample/meta layout with stable $id and local file paths.",
+    "steps": [
+      "Create proper canonical primitive/type schemas (not wrappers) under schema/primitives and schema/types by moving definitions out of schema/defs and updating $id to canonical.",
+      "Replace any wrapper-only files with the actual schemas; update all $ref across the repo to canonical IDs.",
+      "Define single-record sample schemas under schema/sample-def/*.json (or schema/sample/{name}.def.json) and use schema/sample/{name}.json as the canonical ID if preferred.",
+      "Move instance data currently under schema/samples/*.sample.json into examples/sample/*.example.json and examples/samples/*.collection.json; delete schema/samples/ afterwards.",
+      "Update recording.schema.json and participant.schema.json to reference canonical primitive/type/sample/meta IDs only.",
+      "Ensure enums and maps follow the documented patterns and update references accordingly.",
+      "Run Ajv compile over all schemas offline with a resolver mapping canonical $id → local filesystem paths.",
+      "Add a CI job to enforce compile on PR and block regressions."
+    ]
+  },
+
+  "designPrinciples": {
+    "no_backcompat": "Backwards compatibility is not a constraint. Make clean, coherent structures; provide a one-time migration inside this repo.",
+    "primitive_type_layers": "Use primitives for atoms (coordinate, vector3, quaternion, timestamp) and types for compositions (pose, velocity, transform, metadataRef).",
+    "samples": "Sample schemas define row-level time-series records. Collections belong in examples, not under schema.",
+    "meta": "Meta captures static/session/device/software/topology. Samples reference meta via metadataRef.",
+    "x_ai_and_storage": "Optionally decorate primitives/types with x-ai (dims, dtype, order, units, etc.) and x-storage (encoding, stride, layout) for ML and codec tooling."
+  },
+
+  "goal": "Pass-off: remove compatibility wrappers and legacy refs; migrate to canonical primitive/type/sample/meta layout; move example data out of schema/ into examples/ mirroring schema structure.",
+
+  "acceptanceCriteria": [
+    "All wrapper files removed or replaced by canonical schemas (no $ref passthrough to legacy defs).",
+    "All canonical schemas live under schema/{primitives|types|sample|meta} with stable $id and updated $ref.",
+    "No example instance data remains under schema/**; examples/** mirrors the schema structure with example instances.",
+    "Ajv compile passes offline across all canonical schemas (types, primitives, sample definitions, meta).",
+    "Enums and maps follow documented patterns; all refs updated.",
+    "docs/architecture-and-naming.md updated to remove wrapper guidance and reflect final structure."
+  ],
+
+  "keyFiles": [
+    "docs/architecture-and-naming.md",
+    "schema/primitives/coordinate.primitive.json",
+    "schema/primitives/vector3.primitive.json",
+    "schema/primitives/quaternion.primitive.json",
+    "schema/primitives/timestamp.primitive.json",
+    "schema/types/pose.type.json",
+    "schema/types/velocity.type.json",
+    "schema/types/transform.type.json",
+    "schema/types/metadataRef.type.json",
+    "schema/sample/*.json",
+    "schema/meta/*.json",
+    "schema/enums/*.json",
+    "schema/maps/*.json",
+    "schema/recording.schema.json",
+    "schema/participant.schema.json"
+  ],
+
+  "decisions": [
+    "Drop backwards compatibility: remove wrapper indirection and legacy refs; prefer canonical layout immediately.",
+    "Move instance data out of schema/** into examples/** and mirror schema structure there.",
+    "Enforce canonical $id patterns for primitives, types, samples, meta, enums, and maps.",
+    "Use x-ai/x-storage only as advisory; do not make them validation requirements."
+  ],
+
+  "openTodos": [
+    "Inventory wrapper files and legacy refs; produce a concrete delete/move plan.",
+    "Move schema/samples/*.sample.json (data) into examples/sample/*.example.json and examples/samples/*.collection.json.",
+    "Promote defs to canonical primitives/types and update $id + $ref across repo.",
+    "Normalize enums and maps to documented conventions; add missing IDs and fix any stale refs.",
+    "Add Ajv offline resolver configuration and CI compile job.",
+    "Update docs to reflect final architecture; remove wrapper language."
+  ],
+
+  "commands": {
+    "list_wrapper_files": "dir /b /s schema\\primitives\\*.primitive.json schema\\types\\*.type.json schema\\sample\\*.json",
+    "find_schema_examples": "dir /b /s schema\\samples\\*.json",
+    "ajv_compile_all": "npx ajv-cli@6 compile --spec=draft2020 -s schema\\types\\pose.type.json -r schema\\defs\\pose.def.json -r schema\\defs\\vector3.def.json -r schema\\defs\\quaternion.def.json",
+    "note": "After migration, replace compile commands to use only canonical files under schema/{primitives|types|sample|meta} without referencing schema/defs."
+  },
+
+  "checkpoints": [
+    { "timestamp": "2025-10-07", "note": "Scaffolded handoff flow and initial wrappers; fixed trailing comma; added alias/face stubs." },
+    { "timestamp": "2025-10-07T2", "note": "Documented architecture and vectorization/storage hints; created primitive/type wrappers and sample wrappers (temporary)." },
+    { "timestamp": "2025-10-07T3", "note": "Policy updated: no backwards compatibility required. Defined migration plan to remove wrappers, normalize enums/maps, and move example data into examples/ mirroring schema." },
+    { "timestamp": "2025-10-07T5", "note": "Canonicalized sample schemas: inlined hand/joint/bone/trackedObject; sample/{action,event,device,software}.json now reference def schemas; created examples/sample/*.example.json." },
+    { "timestamp": "2025-10-07T6", "note": "Promoted primitives/types to canonical schemas and updated refs across samples/meta; split event meta from software.meta into meta/event.meta.json; fixed duplicate top-level JSON issues." }
+  ]
+}

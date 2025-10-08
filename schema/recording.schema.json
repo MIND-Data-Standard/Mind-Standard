@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/recording.schema.json",
+  "title": "recording",
+  "description": "Top-level container for a MIND dataset recording session.",
+  "type": "object",
+  "required": ["recordingId", "timestampStart", "participant", "devices", "streams"],
+  "properties": {
+    "recordingId": {
+      "type": "string",
+      "description": "Globally unique identifier for the recording session."
+    },
+    "timestampStart": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp for when recording began."
+    },
+    "timestampEnd": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Optional ISO 8601 UTC timestamp for when recording ended."
+    },
+    "participant": {
+      "$ref": "https://mind-schema.org/schema/participant.schema.json"
+    },
+    "devices": {
+      "type": "array",
+      "description": "List of devices contributing data to this recording session (metadata entries).",
+      "items": { "$ref": "https://mind-schema.org/schema/metas/device.meta.json" },
+      "minItems": 1
+    },
+    "streams": {
+      "type": "array",
+      "description": "Primary behavioural data streams captured during the session (e.g., gaze, pose, hand).",
+      "items": {
+        "anyOf": [
+          { "$ref": "https://mind-schema.org/schema/samples/hand.json" },
+          { "$ref": "https://mind-schema.org/schema/samples/joint.json" },
+          { "$ref": "https://mind-schema.org/schema/samples/bone.json" },
+          { "$ref": "https://mind-schema.org/schema/samples/trackedObject.json" }
+        ]
+      },
+      "minItems": 1
+    },
+    "events": {
+      "type": "array",
+      "description": "Event annotations or stimulus markers with optional classification and hierarchy.",
+      "items": { "$ref": "https://mind-schema.org/schema/types/event.json" }
+    },
+    "modelOutputs": {
+      "type": "array",
+      "description": "Optional output streams from models that interpret or control behaviour.",
+      "items": { "type": "object", "additionalProperties": true }
+    },
+    "analysis": {
+      "type": "object",
+      "description": "Optional object containing post-hoc derived metrics or analytical summaries.",
+      "additionalProperties": true
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Optional freeform metadata block: software version, experiment context, user-defined fields.",
+      "additionalProperties": true
+    },
+    "provenance": {
+      "type": "object",
+      "description": "Optional provenance information about dataset origin, version, transformations, or conversions.",
+      "properties": {
+        "originalFormat": { "type": "string" },
+        "conversionTools": { "type": "array", "items": { "type": "string" } },
+        "sourceRepository": { "type": "string", "format": "uri" }
+      },
+      "additionalProperties": true
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Custom extension fields for future compatibility.",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

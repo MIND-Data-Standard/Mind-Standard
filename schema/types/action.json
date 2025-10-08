@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/types/action.json",
+  "title": "action",
+  "description": "Primitive structure for action parameters only.",
+  "type": "object",
+  "properties": {
+    "parameters": {
+      "type": "object",
+      "description": "Action-specific parameters.",
+      "additionalProperties": true
+    }
+  },
+  "required": ["parameters"],
+  "additionalProperties": false
+}

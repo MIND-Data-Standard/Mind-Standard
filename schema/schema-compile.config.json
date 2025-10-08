@@ -1,0 +1,20 @@
+{
+  "base": "https://mind-schema.org/schema",
+  "folders": {
+    "primitives": "schema/primitives",
+    "types": "schema/types",
+    "samples": "schema/sample",
+    "metas": "schema/meta",
+    "maps": "schema/maps",
+    "enums": "schema/enums"
+  },
+  "include": [
+    "schema/participant.schema.json",
+    "schema/recording.schema.json"
+  ],
+  "exclude": [
+    "schema/defs/**",
+    "schema/samples/*.sample.json"
+  ]
+}
+

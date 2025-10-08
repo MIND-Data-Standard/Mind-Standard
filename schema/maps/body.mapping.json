@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/maps/body.mapping.json",
+  "title": "bodyAliasMapping",
+  "description": "Alias mapping for body regions to external standards.",
+  "type": "object",
+  "additionalProperties": { "oneOf": [ { "type": "string" }, { "type": "array", "items": { "type": "string" }, "minItems": 1 } ] }
+}

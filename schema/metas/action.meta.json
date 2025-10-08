@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/metas/action.meta.json",
+  "title": "actionMeta",
+  "description": "Metadata for a standardized action, referencing canonical action type.",
+  "type": "object",
+  "properties": {
+    "definition": { "$ref": "https://mind-schema.org/schema/types/action.json" },
+    "context": { "type": "string", "description": "Context or scenario for the action." },
+    "tags": { "type": "array", "items": { "type": "string" }, "description": "Optional tags for classification." },
+    "extensions": { "type": "object", "description": "Custom extension fields for future compatibility.", "additionalProperties": true }
+  },
+  "required": ["definition"],
+  "additionalProperties": false
+}

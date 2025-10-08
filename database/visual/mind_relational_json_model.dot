@@ -1,0 +1,69 @@
+digraph MIND_Model {
+    graph [
+    rankdir=LR,
+    fontsize=10,
+    fontname="Segoe UI",
+    labelloc="t",
+    label="MIND Data Architecture: Relational Structure + JSONB Payloads"
+    ];
+    node [shape=record, fontname="Segoe UI", fontsize=9, style=rounded, color=gray40];
+    edge [color=gray30, arrowsize=0.7];
+
+    // ─────────────────────────────
+  // Relational Layer
+  // ─────────────────────────────
+  subgraph cluster_relational {
+    label = "Relational Layer (SQL)";
+    style = filled;
+    fillcolor = "#F8FAFF";
+    color = "#B0C4DE";
+
+    Researcher [label="{Researcher|researcher_id : UUID PK\lname : text\lemail : text\l}"];
+    Experience [label="{Experience|experience_id : UUID PK\lresearcher_id : UUID FK → Researcher\lname : text\ldescription : text\l}"];
+    Run [label="{Run|run_id : UUID PK\lexperience_id : UUID FK → Experience\lparticipant_id : UUID\lstart_time : timestamptz\lend_time : timestamptz\l}"];
+    EyeTracking [label="{EyeTracking|eye_id : UUID PK\lrun_id : UUID FK → Run\lframe_number : int\lleft_eye : JSONB\lright_eye : JSONB\lgaze : JSONB\l}"];
+    }
+
+    // ─────────────────────────────
+  // JSON Schema Layer
+  // ─────────────────────────────
+  subgraph cluster_json {
+    label = "JSON Schema Layer (MIND Schema Definitions)";
+    style = filled;
+    fillcolor = "#F7FFF7";
+    color = "#98FB98";
+
+    Vector3 [label="{vector3.def.json|x : number\ly : number\lz : number\l}"];
+    Quaternion [label="{quaternion.def.json|x : number\ly : number\lz : number\lw : number\l}"];
+    Eye [label="{eye_tracking.def.json|position : vector3\lrotation : quaternion\lpupil_size : number\lhit_object : object\l}"];
+    }
+
+    // ─────────────────────────────
+  // SDK Layer
+  // ─────────────────────────────
+  subgraph cluster_sdk {
+    label = "Language SDK Layer (e.g., mind-csharp, mind-python)";
+    style = filled;
+    fillcolor = "#FFF8F2";
+    color = "#FFDAB9";
+
+    SDK_Vector3 [label="{Vector3 (C# Struct)|X : float\lY : float\lZ : float\l}"];
+    SDK_Quaternion [label="{Quaternion (C# Struct)|X : float\lY : float\lZ : float\lW : float\l}"];
+    SDK_Eye [label="{Eye (C# Struct)|Position : Vector3\lRotation : Quaternion\lPupilSize : float\lHitObject : object\l}"];
+    }
+
+    // ─────────────────────────────
+  // Relationships
+  // ─────────────────────────────
+  Researcher -> Experience [label="1..*"];
+    Experience -> Run [label="1..*"];
+    Run -> EyeTracking [label="1..*"];
+
+    EyeTracking -> Eye [label="JSONB payload → validated against"];
+    Eye -> SDK_Eye [label="implemented as"];
+    Vector3 -> SDK_Vector3 [label="implemented as"];
+    Quaternion -> SDK_Quaternion [label="implemented as"];
+
+    SDK_Vector3 -> SDK_Eye [style=dashed, color=gray60];
+    SDK_Quaternion -> SDK_Eye [style=dashed, color=gray60];
+}

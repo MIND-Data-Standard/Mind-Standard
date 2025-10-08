@@ -1,0 +1,4 @@
+{
+  "$schema": "participant.schema.json",
+  "movedTo": "examples/participant.schema.example.json"
+}

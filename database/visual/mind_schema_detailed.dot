@@ -1,0 +1,88 @@
+digraph MIND {
+    graph [rankdir=LR, fontsize=10, fontname="Segoe UI", labelloc="t", label="MIND Relational Schema (v1.0)"];
+    node [shape=record, fontname="Segoe UI", fontsize=9, style=rounded, color=gray40];
+    edge [color=gray30, arrowsize=0.7];
+
+    // ─────────────────────────────
+  // META CLUSTER
+  // ─────────────────────────────
+  subgraph cluster_meta {
+    label = "Meta & Structure";
+    color = "#B0C4DE";
+    style = filled;
+    fillcolor = "#F8FAFF";
+
+    Researcher [label="{Researcher|PK researcher_id : UUID\lname : text\lemail : text\linstitution : text\l}"];
+    Experience [label="{Experience|PK experience_id : UUID\lFK researcher_id : UUID → Researcher\lname : text\ldescription : text\l}"];
+    SessionType [label="{SessionType|PK session_type_id : UUID\lFK experience_id : UUID → Experience\lname : text\l}"];
+    Run [label="{Run|PK run_id : UUID\lFK experience_id : UUID → Experience\lFK session_type_id : UUID → SessionType\lparticipant_id : UUID\lstart_time : timestamptz\lend_time : timestamptz\llength : interval\l}"];
+    Epoch [label="{Epoch|PK epoch_id : UUID\lFK experience_id : UUID → Experience\lname : text\ldescription : text\l}"];
+    Device [label="{Device|PK device_id : UUID\lname : text\ltype : text\lmanufacturer : text\l}"];
+    Software [label="{Software|PK software_id : UUID\lname : text\lversion : text\l}"];
+    RunDevice [label="{RunDevice|FK run_id : UUID → Run\lFK device_id : UUID → Device\l}"];
+    RunSoftware [label="{RunSoftware|FK run_id : UUID → Run\lFK software_id : UUID → Software\l}"];
+    }
+
+    // ─────────────────────────────
+  // EXECUTION CLUSTER
+  // ─────────────────────────────
+  subgraph cluster_execution {
+    label = "Experience Execution & Events";
+    color = "#FFDAB9";
+    style = filled;
+    fillcolor = "#FFF8F2";
+
+    ExperienceExecution [label="{ExperienceExecution|frame_number : int (PK)\ltimestamp : timestamptz\lFK epoch_id : UUID → Epoch\lepoch_number : int\l}"];
+    EventPoint [label="{EventPoint|PK event_id : UUID\lFK run_id : UUID → Run\lFK frame_number : int → ExperienceExecution\lname : text\lsource : text\lsource_type : text\levent_number : int\l}"];
+    Action [label="{Action|PK action_id : UUID\lFK event_id : UUID → EventPoint\ltype : text\l}"];
+    }
+
+    // ─────────────────────────────
+  // TRACKING CLUSTER
+  // ─────────────────────────────
+  subgraph cluster_tracking {
+    label = "Tracking Data";
+    color = "#98FB98";
+    style = filled;
+    fillcolor = "#F7FFF7";
+
+    EyeTracking [label="{EyeTracking|PK eye_id : UUID\lFK run_id : UUID → Run\lframe_number : int\lposition : vector3\lrotation : quaternion\lpupil_size : float\lhit_object : text\lhit_distance : float\l}"];
+    FaceTracking [label="{FaceTracking|PK face_id : UUID\lFK run_id : UUID → Run\lframe_number : int\lcoefficients[60] : float\l}"];
+    BodyTracking [label="{BodyTracking|PK body_id : UUID\lFK run_id : UUID → Run\lframe_number : int\lbone_name : text\lconfidence : float\lposition : vector3\lrotation : quaternion\lvelocity : vector3\l}"];
+    HandTracking [label="{HandTracking|PK hand_id : UUID\lFK run_id : UUID → Run\lframe_number : int\lhand_side : enum(L/R)\lbone_name : text\lposition : vector3\lrotation : quaternion\lvelocity : vector3\l}"];
+    }
+
+    // ─────────────────────────────
+  // VARIABLES CLUSTER
+  // ─────────────────────────────
+  subgraph cluster_variables {
+    label = "Variables & Updates";
+    color = "#E6E6FA";
+    style = filled;
+    fillcolor = "#F9F8FF";
+
+    VariableMeta [label="{VariableMeta|PK variable_id : UUID\lname : text\ldescription : text\lscope : enum(Global/Local)\lvalue_type : enum(Single/Array)\ldata_type : enum(string,float,int,boolean,coordinate,…)\l}"];
+    VariableUpdate [label="{VariableUpdate|PK update_id : UUID\lFK run_id : UUID → Run\lFK variable_id : UUID → VariableMeta\ltimestamp : timestamptz\lmodifier : text\lvalue : text\l}"];
+    }
+
+    // ─────────────────────────────
+  // RELATIONSHIPS
+  // ─────────────────────────────
+  Researcher -> Experience [label="1..*"];
+    Experience -> SessionType [label="1..*"];
+    Experience -> Run [label="1..*"];
+    Experience -> Epoch [label="1..*"];
+    Run -> ExperienceExecution [label="1..*"];
+    Run -> EventPoint [label="1..*"];
+    EventPoint -> Action [label="1..*"];
+    Run -> EyeTracking [label="0..*"];
+    Run -> FaceTracking [label="0..*"];
+    Run -> BodyTracking [label="0..*"];
+    Run -> HandTracking [label="0..*"];
+    Run -> VariableUpdate [label="0..*"];
+    VariableMeta -> VariableUpdate [label="1..*"];
+    Run -> RunDevice [label="0..*"];
+    Run -> RunSoftware [label="0..*"];
+    Device -> RunDevice [label="1..*"];
+    Software -> RunSoftware [label="1..*"];
+}

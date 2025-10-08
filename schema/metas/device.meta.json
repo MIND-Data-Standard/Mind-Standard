@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/metas/device.meta.json",
+  "title": "deviceMeta",
+  "description": "Metadata for a standardized device, referencing canonical device type.",
+  "type": "object",
+  "properties": {
+    "definition": { "$ref": "https://mind-schema.org/schema/types/device.json" },
+    "context": { "type": "string", "description": "Context or scenario for the device." },
+    "tags": { "type": "array", "items": { "type": "string" }, "description": "Optional tags for classification." },
+    "extensions": { "type": "object", "description": "Custom extension fields for future compatibility.", "additionalProperties": true }
+  },
+  "required": ["definition"],
+  "additionalProperties": false
+}

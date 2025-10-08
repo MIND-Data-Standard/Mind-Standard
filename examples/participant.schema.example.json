@@ -1,0 +1,6 @@
+{
+  "$schema": "https://mind-schema.org/schemas/participant.schema.json",
+  "participantId": "p-001",
+  "sex": "unknown"
+}
+

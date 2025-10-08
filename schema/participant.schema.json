@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/participant.schema.json",
+  "title": "participant",
+  "description": "Describes the participant involved in the recording session, including demographic and contextual information relevant to behavioural and cognitive analysis.",
+  "type": "object",
+  "required": ["participantId"],
+  "properties": {
+    "participantId": {
+      "type": "string",
+      "description": "Unique identifier for the participant (anonymised if required)."
+    },
+    "sex": {
+      "type": "string",
+      "enum": ["female", "male", "other", "unknown"],
+      "description": "Biological sex or gender self-identification."
+    },
+    "ageYears": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Age of participant at time of recording, in years."
+    },
+    "handedness": {
+      "type": "string",
+      "enum": ["left", "right", "ambidextrous", "unknown"],
+      "description": "Reported dominant hand."
+    },
+    "visionStatus": {
+      "type": "string",
+      "enum": ["normal", "corrected", "impaired", "unknown"],
+      "description": "Vision capability during recording (e.g., normal, wearing glasses)."
+    },
+    "hearingStatus": {
+      "type": "string",
+      "enum": ["normal", "corrected", "impaired", "unknown"],
+      "description": "Hearing capability during recording."
+    },
+    "clinicalConditions": {
+      "type": "array",
+      "description": "Optional list of relevant diagnoses, neurodivergent traits, or conditions (e.g., ADHD, ASD, stroke).",
+      "items": { "type": "string" }
+    },
+    "notes": {
+      "type": "string",
+      "description": "Freeform notes or anonymised comments relevant to participant context."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "User-defined or task-specific metadata block.",
+      "additionalProperties": true
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Custom extension fields for future compatibility.",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

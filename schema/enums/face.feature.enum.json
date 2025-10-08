@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/enums/face.feature.enum.json",
+  "title": "faceFeature",
+  "description": "Canonical facial features placeholder. This is a stub to enable validation; refine with a full enum in a later PR.",
+  "type": "string",
+  "examples": ["leftEye", "rightEye", "noseTip", "mouthLeft", "mouthRight"]
+}
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/def/alias/body.mapping.json",
+  "title": "bodyAliasMapping",
+  "description": "Alias mapping for body/limb joints to external standards. Keys are standard identifiers (e.g., 'OpenXR', 'BVH'), values are strings or arrays of strings.",
+  "type": "object",
+  "additionalProperties": {
+    "oneOf": [
+      { "type": "string" },
+      { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+    ]
+  }
+}
+

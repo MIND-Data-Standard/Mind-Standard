@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/metas/interactive.meta.json",
+  "$comment": "MIND harmonised 2025-10 — static metadata for interactive tracked objects",
+  "title": "interactive",
+  "description": "Static metadata for interactive tracked objects defining their physical and interaction properties in a simulation or XR environment.",
+  "type": "object",
+  "properties": {
+    "isKinematic": {
+      "type": "boolean",
+      "description": "True if the object is kinematic (moved explicitly, not affected by forces)."
+    },
+    "isStatic": {
+      "type": "boolean",
+      "description": "True if the object is static and does not move or respond to physics."
+    },
+    "mass": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Mass of the object in kilograms."
+    },
+    "drag": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Linear drag (air resistance)."
+    },
+    "angularDrag": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Resistance to angular motion."
+    },
+    "useGravity": {
+      "type": "boolean",
+      "description": "Whether gravity is applied to the object."
+    },
+    "collisionDetectionMode": {
+      "type": "string",
+      "enum": ["discrete", "continuous", "continuousDynamic", "continuousSpeculative"],
+      "description": "Collision detection method used by the physics engine."
+    },
+    "renderLayer": {
+      "type": "string",
+      "description": "Logical rendering layer or group (e.g. 'foreground', 'occluder', 'UI')."
+    },
+    "interactable": {
+      "type": "object",
+      "description": "Interaction behaviour and settings for this object.",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "interactionLayer": { "type": "string" },
+        "grabbable": { "type": "boolean" },
+        "hoverHighlight": { "type": "boolean" },
+        "selectable": { "type": "boolean" },
+        "socketable": { "type": "boolean" }
+      },
+      "required": ["enabled"],
+      "additionalProperties": false
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional classification tags (e.g. 'grabbable', 'target', 'highlighted')."
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Custom extension fields for future compatibility.",
+      "additionalProperties": true
+    }
+  },
+  "required": ["interactable"],
+  "additionalProperties": false
+}

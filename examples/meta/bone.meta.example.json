@@ -1,0 +1,21 @@
+{
+  "$schema": "https://mind-schema.org/schemas/meta/bone.meta.json",
+  "name": "rightIndexProximal",
+  "region": "hand",
+  "side": "right",
+  "fromJoint": {
+    "name": "rightIndexMetacarpal",
+    "region": "hand",
+    "side": "right"
+  },
+  "toJoint": {
+    "name": "rightIndexIntermediate",
+    "region": "hand",
+    "side": "right"
+  },
+  "direction": { "x": 0.0, "y": 1.0, "z": 0.0 },
+  "length": 0.028,
+  "orientation": { "x": 0, "y": 0, "z": 0, "w": 1 },
+  "finger": "index",
+  "bone": "proximal"
+}

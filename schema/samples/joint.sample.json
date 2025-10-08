@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mind-schema.org/schema/samples/joint.sample.json",
+  "$comment": "MIND harmonised 2025-10 — per-frame joint sample referencing static joint metadata.",
+  "title": "jointSample",
+  "description": "Per-frame sample for a tracked joint. Inherits spatial and temporal structure from trackedObject sample.",
+  "allOf": [ { "$ref": "https://mind-schema.org/schema/samples/trackedObject.sample.json" } ],
+  "type": "object",
+  "properties": {
+    "metadataRef": { "$ref": "https://mind-schema.org/schema/types/metadataRef.json", "description": "Reference to the static metadata entry describing this joint (joint.meta.json)." }
+  },
+  "required": ["metadataRef", "poseData"],
+  "additionalProperties": false
+}
